@@ -7,16 +7,25 @@ let level = 0;
 
 let h2 = document.querySelector("h2");
 
-// Start game
-document.addEventListener("keypress", function() {
-    if (started == false) {
+// ---------------- START GAME ----------------
+function startGame() {
+    if (!started) {
         console.log("game started");
         started = true;
         levelup();
     }
-});
+}
 
-// Flash for game
+// Keyboard (PC)
+document.addEventListener("keypress", startGame);
+
+// Click (PC + Mobile)
+document.addEventListener("click", startGame);
+
+// Touch (Mobile)
+document.addEventListener("touchstart", startGame);
+
+// ---------------- FLASH EFFECTS ----------------
 function btnFlash(btn) {
     btn.classList.add("flash");
     setTimeout(() => {
@@ -24,7 +33,6 @@ function btnFlash(btn) {
     }, 300);
 }
 
-// Flash for user
 function userFlash(btn) {
     btn.classList.add("userFlash");
     setTimeout(() => {
@@ -32,7 +40,7 @@ function userFlash(btn) {
     }, 300);
 }
 
-// Level up logic
+// ---------------- LEVEL UP ----------------
 function levelup() {
     userseqvence = [];
     level++;
@@ -47,7 +55,7 @@ function levelup() {
     btnFlash(randombtn);
 }
 
-// Button click
+// ---------------- BUTTON PRESS ----------------
 function btnpress() {
     let btn = this;
     let usercolor = btn.getAttribute("id");
@@ -59,7 +67,13 @@ function btnpress() {
     checkAns(userseqvence.length - 1);
 }
 
-// Check answer
+// Prevent double trigger (touch + click)
+function btnpressHandler(e) {
+    e.preventDefault();
+    btnpress.call(this);
+}
+
+// ---------------- CHECK ANSWER ----------------
 function checkAns(idx) {
     if (userseqvence[idx] === gameseqvence[idx]) {
 
@@ -68,7 +82,7 @@ function checkAns(idx) {
         }
 
     } else {
-        h2.textContent = "❌ Game Over! Press any key to restart";
+        h2.textContent = "❌ Game Over! Press or Tap to restart";
 
         document.body.style.backgroundColor = "red";
         setTimeout(() => {
@@ -79,7 +93,7 @@ function checkAns(idx) {
     }
 }
 
-// Reset game
+// ---------------- RESET ----------------
 function reset() {
     started = false;
     gameseqvence = [];
@@ -87,9 +101,10 @@ function reset() {
     level = 0;
 }
 
-// Add event listeners
+// ---------------- ADD EVENT LISTENERS ----------------
 let allbtns = document.querySelectorAll(".btn");
 
 for (let btn of allbtns) {
-    btn.addEventListener("click", btnpress);
+    btn.addEventListener("click", btnpressHandler);
+    btn.addEventListener("touchstart", btnpressHandler);
 }
