@@ -1,0 +1,49 @@
+body {
+    text-align: center;
+    background-color: white;
+}
+
+h1 {
+    font-size: 40px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: repeat(2, 150px);
+    gap: 20px;
+    justify-content: center;
+    margin-top: 30px;
+}
+
+.btn {
+    height: 150px;
+    width: 150px;
+    border-radius: 20px;
+    border: 5px solid black;
+}
+
+.red {
+    background-color: red;
+}
+
+.blue {
+    background-color: blue;
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+/* Flash effect */
+.flash {
+    background-color: white !important;
+}
+
+/* User click effect */
+.userFlash {
+    opacity: 0.5;
+}
